@@ -17,16 +17,11 @@ app.get('/', (req, res) => {
 });
 
 app.post('/iDIN', (req, res) => {
-    console.log(req.body);
-    console.log(req.body.ofAge);
-    console.log(req.body.publicKey);
-
     const ofAge = req.body.ofAge;
     const publicKey = req.body.publicKey;
-
     web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
-    web3.eth.defaultAccount = web3.eth.accounts[0];
 
+    web3.eth.defaultAccount = web3.eth.accounts[0];
     const bridgeIDRegistry = web3.eth.contract(abi);
     const myBridgeIDRegistry = bridgeIDRegistry.at('0xBEDF6A53eFdc80fb67220139d3EF2961C6270c71');
     const trueAge = myBridgeIDRegistry.setOfAge(publicKey, ofAge);
@@ -36,18 +31,13 @@ app.post('/iDIN', (req, res) => {
 })
 
 app.post('/request', (req, res) => {
-
     const publicKey = req.body.publicKey;
-
     web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+
     web3.eth.defaultAccount = web3.eth.accounts[0];
-
-    console.log(web3.eth.accounts[0]);
-
     const bridgeIDRegistry = web3.eth.contract(abi);
     const myBridgeIDRegistry = bridgeIDRegistry.at('0xBEDF6A53eFdc80fb67220139d3EF2961C6270c71');
     const trueAge = myBridgeIDRegistry.getOfAge.call(publicKey, {from: web3.eth.accounts[0]});
 
     res.send(trueAge);
-
 })
