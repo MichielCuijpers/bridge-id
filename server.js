@@ -3,12 +3,7 @@ const bodyParser= require('body-parser');
 const app = express();
 const Web3 = require('web3');
 const abi = [{"constant":false,"inputs":[{"name":"ownerAddr","type":"address"}],"name":"setOwner","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"addr","type":"address"}],"name":"getOfAge","outputs":[{"name":"","type":"bool"}],"payable":false,"type":"function"},{"constant":false,"inputs":[],"name":"remove","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"addr","type":"address"},{"name":"truth","type":"bool"}],"name":"setOfAge","outputs":[],"payable":false,"type":"function"},{"inputs":[],"payable":false,"type":"constructor"}];
-// function setStatus(message) {
-//   var status = document.getElementById("status");
-//   status.innerHTML = message;
-// };
 
-// app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 
@@ -38,7 +33,6 @@ app.post('/iDIN', (req, res) => {
     myBridgeIDRegistry.setOfAge.sendTransaction(publicKey, ofAge, {from: web3.eth.accounts[0], gas: 2000000});
 
     res.send();
-    //setStatus('We did stuff');
 })
 
 app.post('/request', (req, res) => {
@@ -55,6 +49,5 @@ app.post('/request', (req, res) => {
     const trueAge = myBridgeIDRegistry.getOfAge.call(publicKey, {from: web3.eth.accounts[0]});
 
     res.send(trueAge);
-    //setStatus(trueAge);
 
 })
